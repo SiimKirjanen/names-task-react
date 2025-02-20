@@ -12,6 +12,7 @@ const UserPage = () => {
     queryKey: ["user", id],
     queryFn: () => fetchUser(Number(id)),
     enabled: !!id,
+    retry: 1,
     staleTime: Infinity,
   });
 

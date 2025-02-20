@@ -2,6 +2,7 @@ import { Link } from "react-router";
 import { User } from "../../../types/user";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { deleteUser } from "../../../api/user";
+import { toast } from "react-toastify";
 
 type Props = {
   user: User;
@@ -15,6 +16,10 @@ const UserCard = ({ user, editUser }: Props) => {
       queryClient.setQueryData(["users"], (oldData: User[] | undefined) =>
         oldData ? oldData.filter((u) => u.id !== user.id) : []
       );
+      toast.success("User deleted successfully");
+    },
+    onError: () => {
+      toast.error("Failed to delete user");
     },
   });
 

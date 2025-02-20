@@ -11,10 +11,16 @@ const UserDetails = ({ user }: Props) => {
       <UserDetail label="Email" value={user.email} />
       <UserDetail label="Phone" value={user.phone} />
       <UserDetail label="Website" value={user.website} />
-      <UserDetail label="Company" value={user.company.name} />
       <UserDetail label="Address" value={user.address.street} />
       <UserDetail label="City" value={user.address.city} />
       <UserDetail label="Zipcode" value={user.address.zipcode} />
+      <UserDetail
+        label="Geo"
+        value={`${user.address.geo.lat}, ${user.address.geo.lng}`}
+      />
+      <UserDetail label="Company" value={user.company.name} />
+      <UserDetail label="Catchphrase" value={user.company.catchPhrase} />
+      <UserDetail label="Bs" value={user.company.bs} />
     </div>
   );
 };

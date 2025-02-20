@@ -8,25 +8,28 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { User } from "../../../types/user";
 import { userSchema } from "../../../schemas/user-schema";
+import Spinner from "../../common/Loading/Spinner/Spinner";
 
 type UserFormData = z.infer<typeof userSchema>;
 
 type Props = {
   user: User | null;
-  onSave: (userData: Omit<User, "id">) => void;
+  onSave: (userData: Omit<User, "id">, reset: () => void) => void;
+  isSaving: boolean;
 };
 
-const UserForm = ({ user, onSave }: Props) => {
+const UserForm = ({ user, onSave, isSaving = false }: Props) => {
   const {
     register,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm<UserFormData>({
     resolver: zodResolver(userSchema),
     defaultValues: user || undefined,
   });
   const onSubmit: SubmitHandler<UserFormData> = (data) => {
-    onSave(data);
+    onSave(data, reset);
   };
 
   return (
@@ -119,9 +122,13 @@ const UserForm = ({ user, onSave }: Props) => {
         error={errors.company?.bs}
       />
       <div className="col-span-1 md:col-span-2 flex justify-end">
-        <button type="submit" className="btn btn-primary mt-4">
-          Save
-        </button>
+        {isSaving ? (
+          <Spinner className="loading-xl" />
+        ) : (
+          <button type="submit" className="btn btn-primary mt-4">
+            Save
+          </button>
+        )}
       </div>
     </form>
   );
