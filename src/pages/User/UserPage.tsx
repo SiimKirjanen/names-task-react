@@ -12,6 +12,7 @@ const UserPage = () => {
     queryKey: ["user", id],
     queryFn: () => fetchUser(Number(id)),
     enabled: !!id,
+    staleTime: Infinity,
   });
 
   if (isPending) {

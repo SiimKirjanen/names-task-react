@@ -5,8 +5,9 @@ import { deleteUser } from "../../../api/user";
 
 type Props = {
   user: User;
+  editUser: (user: User) => void;
 };
-const UserCard = ({ user }: Props) => {
+const UserCard = ({ user, editUser }: Props) => {
   const queryClient = useQueryClient();
   const deleteMutation = useMutation({
     mutationFn: deleteUser,
@@ -19,6 +20,10 @@ const UserCard = ({ user }: Props) => {
 
   const handleUserDelete = () => {
     deleteMutation.mutate(user.id);
+  };
+
+  const handleUserEdit = () => {
+    editUser(user);
   };
 
   return (
@@ -34,7 +39,9 @@ const UserCard = ({ user }: Props) => {
           <button className="btn btn-sm btn-error" onClick={handleUserDelete}>
             Delete
           </button>
-          <button className="btn btn-primary btn-sm">Edit</button>
+          <button className="btn btn-primary btn-sm" onClick={handleUserEdit}>
+            Edit
+          </button>
         </div>
       </div>
     </div>
